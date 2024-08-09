@@ -1,0 +1,51 @@
+<div class="w-100 h-100 d-flex align-items-center justify-content-center bg-secondary bg-opacity-10">
+
+  <!-- main container -->
+  <div class="w-100 h-100 px-3 py-3 d-flex">
+
+    <!-- side menu -->
+    <div class="h-100 me-3 d-none d-lg-flex" style="width: 310px;">
+      <app-panel-side-menu></app-panel-side-menu>
+    </div>
+    <!-- side menu -->
+
+    <!-- main -->
+    <div class="w-100 h-100 row g-0">
+
+      <!-- header menu -->
+      <div class="col-12" style="height: 75px;">
+        <app-panel-header-menu></app-panel-header-menu>
+      </div>
+      <!-- header menu -->
+
+      <!-- middle -->
+      <div class="col-12 d-flex py-3" style="height: calc(100% - 125px);">
+
+        <!-- main section -->
+        <div class="w-100 pe-3">
+          <app-panel-main-section></app-panel-main-section>
+        </div>
+        <!-- main section -->
+
+        <!-- app section -->
+        <div class="d-none d-lg-flex" style="width: 310px;">
+          <app-panel-app-list-menu></app-panel-app-list-menu>
+        </div>
+        <!-- app section -->
+
+      </div>
+      <!-- middle -->
+
+      <!-- status bar -->
+      <div class="col-12" style="height: 50px;">
+        <app-panel-status-bar></app-panel-status-bar>
+      </div>
+      <!-- status bar -->
+
+    </div>
+    <!-- main -->
+
+  </div>
+  <!-- main container -->
+
+</div>
