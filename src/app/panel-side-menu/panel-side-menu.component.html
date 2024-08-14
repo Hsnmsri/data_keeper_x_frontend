@@ -1,15 +1,47 @@
-<div class="w-100 h-100 row g-0 p-3 bg-secondary bg-opacity-50 rounded-4 shadow-sm">
+<div class="w-100 h-100 d-flex flex-column  justify-content-between p-3 bg-secondary bg-opacity-50 rounded-4 shadow-sm">
 
   <!-- logo -->
   <div class="col-12">
 
-    <img src="images/logo.svg" alt="data-keeper-x-logo" style="width: 60px;">
+    <img src="images/logo.svg" alt="data-keeper-x-logo" style="width: 50px;">
 
-    <span class="h4 m-0">
+    <span class="h5 text-primary">
       DataKeeperX
     </span>
 
   </div>
   <!-- logo -->
+
+  <!-- menu actions -->
+  <div class="d-lg-none">
+    <div>
+    </div>
+  </div>
+  <!-- menu actions -->
+
+  <!-- menu -->
+  <div class="mb-auto mt-5">
+    <!-- items -->
+    @for (item of [1,2,3]; track $index) {
+    <a [routerLink]="[ '/panel' ]" routerLinkActive="bg-primary bg-opacity-75 text-dark "
+      class="col-12 row g-0 px-1 py-1 align-items-center text-decoration-none mb-2 rounded-3">
+      <div class="col-auto d-flex align-items-center justify-content-center" style="aspect-ratio: 1; width: 30px;">
+        <i class="bi bi-app-indicator"></i>
+      </div>
+      <div class="col">
+        <span>Apps</span>
+      </div>
+    </a>
+    }
+  </div>
+  <!-- menu -->
+
+  <!-- copyright -->
+  <div class="col-12 d-flex justify-content-center">
+    <small class="text-secondary">
+      Powered by <a href="#" class="text-decoration-none">Mr.Mansouri</a>
+    </small>
+  </div>
+  <!-- copyright -->
 
 </div>
