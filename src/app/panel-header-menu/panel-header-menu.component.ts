@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppService } from '../../services/app.service';
 
 @Component({
   selector: 'app-panel-header-menu',
@@ -9,4 +10,9 @@ import { Component } from '@angular/core';
 })
 export class PanelHeaderMenuComponent {
 
+  constructor(private appService: AppService){}
+
+  toggleSideMenuVisibility(){
+    this.appService.toggleSideMenu();
+  }
 }

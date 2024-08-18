@@ -1,12 +1,14 @@
 <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-secondary bg-opacity-10">
 
   <!-- main container -->
-  <div class="w-100 h-100 px-3 py-3 d-flex">
+  <div class="w-100 h-100 px-3 py-3 d-flex overflow-x-hidden">
 
     <!-- side menu -->
-    <div class="h-100 me-3 d-none d-lg-block" style="width: 310px;">
+    @if(isSideBarVisible){
+    <div class="h-100 me-3" style="min-width: 270px;">
       <app-panel-side-menu></app-panel-side-menu>
     </div>
+    }
     <!-- side menu -->
 
     <!-- main -->
@@ -28,7 +30,7 @@
         <!-- main section -->
 
         <!-- app section -->
-        <div class="d-none d-lg-block overflow-y-hidden" style="width: 310px;">
+        <div class="d-none d-lg-block overflow-y-hidden" style="min-width: 260px;">
           <app-panel-app-list-menu></app-panel-app-list-menu>
         </div>
         <!-- app section -->
