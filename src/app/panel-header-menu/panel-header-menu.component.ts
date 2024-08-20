@@ -15,4 +15,8 @@ export class PanelHeaderMenuComponent {
   toggleSideMenuVisibility(){
     this.appService.toggleSideMenu();
   }
+
+  toggleAppListMenuVisibility(){
+    this.appService.toggleAppListMenu();
+  }
 }

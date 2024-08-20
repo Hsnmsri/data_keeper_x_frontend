@@ -22,8 +22,10 @@ import { AppService } from '../../services/app.service';
 })
 export class PanelComponent {
   isSideBarVisible: boolean = true;
-  isMainContainerVisible: boolean = true;
-  private subscription!: Subscription;
+  isAppListVisible: boolean = true;
+
+  private subscriptionSideMenu!: Subscription;
+  private subscriptionAppListMenu!: Subscription;
 
   constructor(private appService: AppService) {}
 
@@ -35,17 +37,33 @@ export class PanelComponent {
         this.appService.toggleSideMenu();
       }
     }
-    this.subscription = this.appService
+    this.subscriptionSideMenu = this.appService
       .getSideMenuVisibility()
       .subscribe((visible) => {
         this.isSideBarVisible = visible;
+      });
+
+    // Subscribe to the app list menu visibility observable
+    if (window.innerWidth < 992) {
+      this.isAppListVisible = false;
+      if (this.appService.getAppListMenuVisibility()) {
+        this.appService.toggleAppListMenu();
+      }
+    }
+    this.subscriptionAppListMenu = this.appService
+      .getAppListMenuVisibility()
+      .subscribe((visible) => {
+        this.isAppListVisible = visible;
       });
   }
 
   ngOnDestroy() {
     // Unsubscribe to prevent memory leaks
-    if (this.subscription) {
-      this.subscription.unsubscribe();
+    if (this.subscriptionSideMenu) {
+      this.subscriptionSideMenu.unsubscribe();
+    }
+    if (this.subscriptionAppListMenu) {
+      this.subscriptionAppListMenu.unsubscribe();
     }
   }
 }
