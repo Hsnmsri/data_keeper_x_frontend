@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class AppService {
   private sideMenuVisibility = new BehaviorSubject<boolean>(true);
   private appListMenuVisibility = new BehaviorSubject<boolean>(true);
+  private loadingVisibility = new BehaviorSubject<boolean>(false);
 
   // side menu
   toggleSideMenu() {
@@ -24,5 +25,14 @@ export class AppService {
 
   getAppListMenuVisibility() {
     return this.appListMenuVisibility.asObservable();
+  }
+
+  // loading visibility
+  setLoadingVisibility(status: boolean) {
+    this.loadingVisibility.next(status);
+  }
+
+  getloadingVisibility() {
+    return this.loadingVisibility.asObservable();
   }
 }
