@@ -1,0 +1,31 @@
+@if(visibility){
+<!-- backframe -->
+<div class="position-absolute bg-dark bg-opacity-50 top-0 start-0 w-100 h-100" (click)="emitCloseModal()"></div>
+<!-- backframe -->
+
+<div class="position-absolute d-flex align-items-center justify-content-center top-0 start-0 w-100 h-100">
+
+  <!-- modal -->
+  <div class="bg-white overflow-y-auto d-flex flex-column rounded-3 shadow-sm px-3 py-2 pb-3"
+    style="max-width: 500px;max-height: 500px;">
+
+    <!-- header -->
+    <div class="d-flex align-items-center justify-content-between py-2">
+      <strong>{{title}}</strong>
+      <button class="btn border-0" (click)="emitCloseModal()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+    <!-- header -->
+
+    <!-- modal body -->
+    <div class="overflow-y-auto">
+      <ng-content />
+    </div>
+    <!-- modal body -->
+
+  </div>
+  <!-- modal -->
+
+</div>
+}
