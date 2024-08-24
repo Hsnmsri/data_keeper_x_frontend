@@ -3,11 +3,12 @@ import { RouterOutlet } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { LoadingComponent } from './loading/loading.component';
 import { ModalComponent } from './modal/modal.component';
+import { ToastComponent } from "./toast/toast.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LoginComponent, LoadingComponent, ModalComponent],
+  imports: [RouterOutlet, LoginComponent, LoadingComponent, ModalComponent, ToastComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

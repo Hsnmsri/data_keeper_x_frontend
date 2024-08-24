@@ -30,6 +30,7 @@ export class PanelComponent {
   constructor(private appService: AppService) {}
 
   ngOnInit() {
+    this.appService.alert('laskdjflaskdjf')
     // Subscribe to the menu visibility observable
     if (window.innerWidth < 992) {
       this.isSideBarVisible = false;

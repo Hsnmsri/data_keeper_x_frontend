@@ -1,0 +1,13 @@
+<div class="position-absolute" style="width: 350px;left: calc(50% - 175px);top: 15px;">
+
+  <!-- toasts -->
+  <div class="w-100 d-flex flex-column justify-content-center">
+    <!-- item -->
+    @for (alert of alerts; track alert.t_key) {
+    <app-toast-item [t_key]="alert.t_key" [text]="alert.text" [bgStatus]="alert.bgStatus"
+      [textStatus]="alert.textStatus" />
+    }
+  </div>
+  <!-- toasts -->
+
+</div>
