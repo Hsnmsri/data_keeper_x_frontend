@@ -1,0 +1,18 @@
+$app_section_width: 260px;
+
+.app-section {
+  max-width: $app_section_width;
+  min-width: $app_section_width;
+}
+
+.main-section {
+  min-width: 100%;
+  max-width: 100%;
+}
+
+@media (min-width: 992px) {
+  .main-section {
+    min-width: calc(100% - $app_section_width);
+    max-width: calc(100% - $app_section_width);
+  }
+}
