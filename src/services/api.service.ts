@@ -56,11 +56,12 @@ export class ApiService {
 
     // post put delete request
     response = await axios({
+      url: this.generateRoute(route),
       method: method,
       headers: requestHeader,
       data: data,
     });
-
+    console.log(response.data);
     return response.data;
   }
 

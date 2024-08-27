@@ -41,8 +41,22 @@ export class AppService {
   // loading visibility
   async alert(
     text: string,
-    bgStatus: string = 'primary',
-    textStatus: string = 'dark',
+    bgStatus:
+      | 'success'
+      | 'primary'
+      | 'danger'
+      | 'info'
+      | 'warning'
+      | 'dark'
+      | 'light' = 'primary',
+    textStatus:
+      | 'success'
+      | 'primary'
+      | 'danger'
+      | 'info'
+      | 'warning'
+      | 'dark'
+      | 'light' = 'dark',
     timeout_ms: number = 2300
   ) {
     // create alert new list
