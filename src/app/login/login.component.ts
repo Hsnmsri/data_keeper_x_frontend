@@ -1,6 +1,6 @@
 import { FormsModule } from '@angular/forms';
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { AppService } from '../../services/app.service';
 import { ModalComponent } from '../modal/modal.component';
@@ -25,7 +25,11 @@ export class LoginComponent {
     title: 'DataKeeperX Terms and Conditions',
   };
 
-  constructor(private appService: AppService, private apiService: ApiService) {}
+  constructor(
+    private appService: AppService,
+    private apiService: ApiService,
+    private router: Router
+  ) {}
 
   async login() {
     let response = await this.apiService.sendRequest('login', 'post', false, {
@@ -35,7 +39,10 @@ export class LoginComponent {
 
     // success
     if (response.success) {
-      this.appService.alert('Login Success!', 'success', 'light');
+      this.appService.setloadingVisibility(true);
+      window.localStorage.setItem('token', response.data.token);
+      this.router.navigate(['/panel']);
+      this.appService.setloadingVisibility(false);
     }
 
     // error

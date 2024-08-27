@@ -6,6 +6,8 @@ import { PanelMainSectionComponent } from '../panel-main-section/panel-main-sect
 import { PanelAppListMenuComponent } from '../panel-app-list-menu/panel-app-list-menu.component';
 import { Subscription } from 'rxjs';
 import { AppService } from '../../services/app.service';
+import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-panel',
@@ -27,9 +29,33 @@ export class PanelComponent {
   private subscriptionSideMenu!: Subscription;
   private subscriptionAppListMenu!: Subscription;
 
-  constructor(private appService: AppService) {}
+  constructor(
+    private appService: AppService,
+    private router: Router,
+    private userService: UserService
+  ) {
+    this.userService = new UserService();
+  }
 
-  ngOnInit() {
+  async ngOnInit() {
+    // Verify Access Token
+    if (localStorage.getItem('token') == null) {
+      this.router.navigate(['/login']);
+      return;
+    }
+    if (!(await this.userService.verifyAccessToken())) {
+      this.appService.alert('Token Expired!', 'danger');
+      localStorage.removeItem('token');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    // Get user data
+    if (!(await this.userService.loadUserData())) {
+      this.appService.alert('Sync User Data Failed!', 'danger');
+      this.router.navigate(['/login']);
+      return;
+    }
     // Subscribe to the menu visibility observable
     if (window.innerWidth < 992) {
       this.isSideBarVisible = false;
