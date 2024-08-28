@@ -56,6 +56,9 @@ export class PanelComponent {
       this.router.navigate(['/login']);
       return;
     }
+    // Get user role
+    await this.userService.loadUserRole();
+
     // Subscribe to the menu visibility observable
     if (window.innerWidth < 992) {
       this.isSideBarVisible = false;

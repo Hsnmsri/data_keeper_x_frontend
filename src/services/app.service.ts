@@ -94,4 +94,12 @@ export class AppService {
   getAlerts() {
     return this.alerts.asObservable();
   }
+
+  changeTheme(theme: 'dark' | 'light') {
+    let browserTheme = localStorage.getItem('theme');
+    const rootElement = document.documentElement;
+    rootElement.setAttribute('data-bs-theme', theme);
+    localStorage.setItem('theme', theme);
+    return;
+  }
 }
