@@ -1,1 +1,81 @@
-<p>users works!</p>
+<div class="w-100 h-100 d-flex flex-column overflow-y-auto">
+
+  <!-- header -->
+  <div class="w-100 d-flex align-items-center justify-content-between">
+    <!-- search -->
+    <div>
+      <input type="text" class="form-control shadow-none" placeholder="Search" (input)="search()" [(ngModel)]="searchInput">
+    </div>
+    <!-- search -->
+
+    <!-- create  -->
+    <div>
+      <button class="btn btn-primary">
+        <i class="bi bi-plus"></i>
+        New User
+      </button>
+    </div>
+    <!-- create  -->
+  </div>
+  <!-- header -->
+
+  <!-- main section -->
+  <div class="w-100 row g-0 pt-4">
+
+    <!-- item -->
+    @for (user of SearchedUsers; track $index) {
+    <div class="col-12 row g-0 bg-secondary bg-opacity-25 rounded-4 px-3 py-3 mb-3">
+      <!-- icon -->
+      <div class="col-auto">
+        <div class="bg-secondary rounded-pill d-flex align-items-center justify-content-center"
+          style="width: 50px;aspect-ratio: 1;">
+          <h4 class="bi bi-person-fill text-light m-0"></h4>
+        </div>
+      </div>
+      <!-- icon -->
+
+      <!-- detail -->
+      <div class="col d-flex flex-column justify-content-center ps-3">
+        <span>
+          {{user.first_name!==null?user.first_name + ' ' + user.last_name : 'incomplete'}}
+        </span>
+        <small class="opacity-75">
+          {{user.email}}
+        </small>
+      </div>
+      <!-- detail -->
+
+      <!-- role -->
+      <div class="col d-flex align-items-center">
+        <span>
+          {{getRoleNameById(user.role_id)}}
+        </span>
+      </div>
+      <!-- role -->
+
+      <!-- actions -->
+      <div class="col-auto d-flex align-items-center">
+        <!-- edit -->
+        <button class="btn btn-secondary mx-1">
+          <i class="bi bi-pencil"></i>
+        </button>
+        <!-- delete -->
+        <button class="btn btn-danger mx-1">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+      <!-- actions -->
+
+      <div>
+
+      </div>
+
+
+    </div>
+    }
+    <!-- item -->
+
+  </div>
+  <!-- main section -->
+
+</div>

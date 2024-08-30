@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-panel-main-section',
   standalone: true,
-  imports: [],
+  imports: [RouterOutlet],
   templateUrl: './panel-main-section.component.html',
-  styleUrl: './panel-main-section.component.scss'
+  styleUrl: './panel-main-section.component.scss',
 })
-export class PanelMainSectionComponent {
-
-}
+export class PanelMainSectionComponent {}

@@ -3,6 +3,7 @@ import { LoginComponent } from './login/login.component';
 import { AppComponent } from './app.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { PanelComponent } from './panel/panel.component';
+import { UsersComponent } from './users/users.component';
 
 export const routes: Routes = [
   {
@@ -20,5 +21,11 @@ export const routes: Routes = [
   {
     path: 'panel',
     component: PanelComponent,
+    children: [
+      {
+        path: 'users',
+        component: UsersComponent,
+      },
+    ],
   },
 ];
