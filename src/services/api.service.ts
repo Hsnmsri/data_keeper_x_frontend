@@ -1,6 +1,7 @@
 import { Injectable, resolveForwardRef } from '@angular/core';
 import axios, { Axios } from 'axios';
 import env from '../env';
+import ApiResponse from '../models/response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +38,7 @@ export class ApiService {
     hasAuthorization: boolean = false,
     data: any = null,
     headers: any = {}
-  ) {
+  ): Promise<ApiResponse> {
     let response: any;
 
     // generate headers
@@ -62,6 +63,7 @@ export class ApiService {
       data: data,
     });
     console.log(response.data);
+
     return response.data;
   }
 
