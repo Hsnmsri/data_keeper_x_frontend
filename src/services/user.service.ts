@@ -20,6 +20,7 @@ export class UserService {
     first_name: null,
     last_name: null,
     email: null,
+    password: null,
     api_secret: null,
     created_at: null,
     updated_at: null,
