@@ -4,13 +4,14 @@
   <div class="w-100 d-flex align-items-center justify-content-between">
     <!-- search -->
     <div>
-      <input type="text" class="form-control shadow-none" placeholder="Search" (input)="search()" [(ngModel)]="searchInput">
+      <input type="text" class="form-control shadow-none" placeholder="Search" (input)="search()"
+        [(ngModel)]="searchInput">
     </div>
     <!-- search -->
 
     <!-- create  -->
     <div>
-      <button class="btn btn-primary">
+      <button class="btn btn-primary" (click)="showModal('newUser')">
         <i class="bi bi-plus"></i>
         New User
       </button>
@@ -79,3 +80,51 @@
   <!-- main section -->
 
 </div>
+
+<app-modal [title]="modal.title" [visibility]="modal.visibility" (closeModal)="modal.visibility=!modal.visibility">
+  <!-- Create user form -->
+  @if (modalForm=='newUser') {
+  <div class="row g-0 col-12">
+    <!-- first name -->
+    <div class="col-6 pe-1">
+      <label class="form-label">First Name</label>
+      <input type="text" class="form-control" [(ngModel)]="newUser.first_name">
+    </div>
+    <!-- last name -->
+    <div class="col-6 ps-1">
+      <label class="form-label">Last Name</label>
+      <input type="text" class="form-control" [(ngModel)]="newUser.last_name">
+    </div>
+    <!-- email -->
+    <div class="col-12 mt-3">
+      <label class="form-label">Email</label>
+      <input type="text" class="form-control" [(ngModel)]="newUser.email">
+    </div>
+    <!-- role -->
+    <div class="col-12 mt-3">
+      <label class="form-label">Role</label>
+      <select class="form-select" [(ngModel)]="newUser.role_id">
+        <option value="0">Select Item</option>
+        @for (role of Roles; track $index) {
+        <option [value]="role.id">{{role.name}}</option>
+        }
+      </select>
+    </div>
+    <!-- password -->
+    <div class="col-12 mt-3">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-control" [(ngModel)]="newUser.password">
+    </div>
+    <!-- actions -->
+    <div class="col-12 d-flex mt-4">
+      <button class="btn btn-secondary" (click)="resetNewUser()">
+        Reset
+      </button>
+      <button class="btn btn-primary ms-auto" (click)="createNewUser()">
+        Create
+      </button>
+    </div>
+  </div>
+  }
+  <!-- Create user form -->
+</app-modal>

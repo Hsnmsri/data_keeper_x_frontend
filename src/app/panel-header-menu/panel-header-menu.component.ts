@@ -28,6 +28,7 @@ export class PanelHeaderMenuComponent implements OnInit {
     email: null,
     first_name: null,
     id: null,
+    password: null,
     last_name: null,
     role_id: null,
     updated_at: null,
