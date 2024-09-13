@@ -24,7 +24,7 @@ import { Router } from '@angular/router';
 })
 export class PanelComponent {
   isSideBarVisible: boolean = true;
-  isAppListVisible: boolean = true;
+  isAppListVisible: boolean = false;
 
   private subscriptionSideMenu!: Subscription;
   private subscriptionAppListMenu!: Subscription;

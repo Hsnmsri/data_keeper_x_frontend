@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import searchOnArray from '../../shared/helpers/arraySearch';
 import { ModalComponent } from '../modal/modal.component';
 import Modal from '../../models/modal.model';
+import isNull from '../../shared/helpers/isNull';
 
 @Component({
   selector: 'app-users',
@@ -20,18 +21,18 @@ export class UsersComponent {
   Roles: Role[] = [];
   searchInput: string = '';
   SearchedUsers: User[] = [];
-  modalForm?: 'newUser';
+  modalForm?: 'newUser' | 'updateUser' | 'updatePassword' | 'updateEmail';
   modal: Modal = {
     title: '',
     visibility: false,
   };
-  newUser: User = {
+  User: User = {
     id: null,
-    role_id: 0,
-    first_name: '',
-    last_name: '',
-    email: '',
-    password: '',
+    role_id: null,
+    first_name: null,
+    last_name: null,
+    email: null,
+    password: null,
     api_secret: null,
     created_at: null,
     updated_at: null,
@@ -221,27 +222,32 @@ export class UsersComponent {
    * this.resetNewUser(); // Resets the newUser object to its default state.
    */
   resetNewUser() {
-    this.newUser = {
+    this.User = {
       id: null,
-      role_id: 0,
-      first_name: '',
-      last_name: '',
-      email: '',
-      password: '',
+      role_id: null,
+      first_name: null,
+      last_name: null,
+      email: null,
+      password: null,
       api_secret: null,
       created_at: null,
       updated_at: null,
     };
   }
 
+  /**
+   * Creates a new user by sending a POST request to the API.
+   * Handles both success and error scenarios, and updates the UI accordingly.
+   */
   async createNewUser() {
     try {
       this.appService.setloadingVisibility(true);
+
       const response = await this.apiService.sendRequest(
         'users',
         'post',
         true,
-        this.newUser
+        this.User
       );
 
       // success
@@ -265,12 +271,151 @@ export class UsersComponent {
     }
   }
 
-  showModal(modalForm: 'newUser') {
+  async updateUser() {
+    try {
+      this.appService.setloadingVisibility(true);
+
+      // check data
+      if (this.User.first_name?.trim() == '') {
+        this.User.first_name = null;
+      }
+      if (this.User.last_name?.trim() == '') {
+        this.User.last_name = null;
+      }
+
+      const response = await this.apiService.sendRequest(
+        `users/${this.User.id}`,
+        'put',
+        true,
+        this.User
+      );
+
+      this.appService.setloadingVisibility(false);
+
+      // success
+      if (response.success) {
+        this.modal.visibility = false;
+        await this.updateRole();
+        this.appService.alert('Update User Successfully!', 'success');
+        this.loadUserList();
+        this.resetNewUser();
+      }
+
+      // error
+      if (!response.success) {
+        this.modal.visibility = false;
+        this.appService.alert(response.message, 'danger');
+      }
+
+      this.loadUserList();
+    } catch (error) {
+      this.appService.alert('Failed to update user!', 'danger');
+    }
+  }
+
+  async updateRole() {
+    try {
+      if (typeof this.User.role_id == 'string') {
+        this.User.role_id = null;
+      }
+
+      const response = await this.apiService.sendRequest(
+        `users/${this.User.id}/role`,
+        'put',
+        true,
+        this.User
+      );
+
+      // error
+      if (!response.success) {
+        this.appService.alert(response.message, 'danger');
+      }
+
+      this.loadUserList();
+    } catch (error) {
+      this.appService.alert('Failed to update role!', 'danger');
+    }
+  }
+
+  async updateEmail() {
+    try {
+      const response = await this.apiService.sendRequest(
+        `users/${this.User.id}/email`,
+        'put',
+        true,
+        this.User
+      );
+
+      // success
+      if (response.success) {
+        this.appService.alert('User Email Updated Successfully!', 'success');
+        this.loadUserList();
+        this.modal.visibility = false;
+      }
+
+      // error
+      if (!response.success) {
+        if (response.status_code == 409) {
+          this.appService.alert('Email exist! please try again...', 'danger');
+          return;
+        }
+        this.appService.alert(response.message, 'danger');
+      }
+
+      this.loadUserList();
+    } catch (error) {
+      this.appService.alert('Failed to update email!', 'danger');
+    }
+  }
+
+  showUpdateUserModal(userId: number) {
+    this.showModal('updateUser');
+
+    this.Users.forEach((user) => {
+      if (user.id == userId) {
+        this.User = user;
+        return;
+      }
+    });
+  }
+
+  showUpdateUserEmailModal(userId: number) {
+    this.showModal('updateEmail');
+
+    this.Users.forEach((user) => {
+      if (user.id == userId) {
+        this.User = user;
+        return;
+      }
+    });
+  }
+
+  showModal(
+    modalForm: 'newUser' | 'updateUser' | 'changePassword' | 'updateEmail'
+  ) {
     // new user form
     if (modalForm == 'newUser') {
       this.resetNewUser();
       this.modalForm = 'newUser';
       this.modal.title = 'Create New User';
+      this.modal.visibility = true;
+      return;
+    }
+
+    // update user form
+    if (modalForm == 'updateUser') {
+      this.resetNewUser();
+      this.modalForm = 'updateUser';
+      this.modal.title = 'Update User';
+      this.modal.visibility = true;
+      return;
+    }
+
+    // update email form
+    if (modalForm == 'updateEmail') {
+      this.resetNewUser();
+      this.modalForm = 'updateEmail';
+      this.modal.title = 'Update User Email';
       this.modal.visibility = true;
       return;
     }

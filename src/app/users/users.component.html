@@ -56,9 +56,17 @@
 
       <!-- actions -->
       <div class="col-auto d-flex align-items-center">
-        <!-- edit -->
-        <button class="btn btn-secondary mx-1">
+        <!-- update detail -->
+        <button class="btn btn-secondary mx-1" (click)="showUpdateUserModal(user.id??0)">
           <i class="bi bi-pencil"></i>
+        </button>
+        <!-- change email -->
+        <button class="btn btn-secondary mx-1" (click)="showUpdateUserEmailModal(user.id??0)">
+          Change Email
+        </button>
+        <!-- change password -->
+        <button class="btn btn-secondary mx-1">
+          Change Password
         </button>
         <!-- delete -->
         <button class="btn btn-danger mx-1">
@@ -88,23 +96,23 @@
     <!-- first name -->
     <div class="col-6 pe-1">
       <label class="form-label">First Name</label>
-      <input type="text" class="form-control" [(ngModel)]="newUser.first_name">
+      <input type="text" class="form-control" [(ngModel)]="User.first_name">
     </div>
     <!-- last name -->
     <div class="col-6 ps-1">
       <label class="form-label">Last Name</label>
-      <input type="text" class="form-control" [(ngModel)]="newUser.last_name">
+      <input type="text" class="form-control" [(ngModel)]="User.last_name">
     </div>
     <!-- email -->
     <div class="col-12 mt-3">
       <label class="form-label">Email</label>
-      <input type="text" class="form-control" [(ngModel)]="newUser.email">
+      <input type="text" class="form-control" [(ngModel)]="User.email">
     </div>
     <!-- role -->
     <div class="col-12 mt-3">
       <label class="form-label">Role</label>
-      <select class="form-select" [(ngModel)]="newUser.role_id">
-        <option value="0">Select Item</option>
+      <select class="form-select" [(ngModel)]="User.role_id">
+        <option value="null">Developer</option>
         @for (role of Roles; track $index) {
         <option [value]="role.id">{{role.name}}</option>
         }
@@ -113,7 +121,7 @@
     <!-- password -->
     <div class="col-12 mt-3">
       <label class="form-label">Password</label>
-      <input type="password" class="form-control" [(ngModel)]="newUser.password">
+      <input type="password" class="form-control" [(ngModel)]="User.password">
     </div>
     <!-- actions -->
     <div class="col-12 d-flex mt-4">
@@ -127,4 +135,66 @@
   </div>
   }
   <!-- Create user form -->
+
+  <!-- Update user -->
+  @if (modalForm=='updateUser') {
+  <div class="row g-0 col-12">
+    <!-- email -->
+    <div class="col-12">
+      <label class="form-label">Email</label>
+      <input type="text" class="form-control" [(ngModel)]="User.email" disabled="true">
+    </div>
+    <!-- first name -->
+    <div class="col-12 mt-3">
+      <label class="form-label">First Name</label>
+      <input type="text" class="form-control" [(ngModel)]="User.first_name">
+    </div>
+    <!-- last name -->
+    <div class="col-12 mt-3">
+      <label class="form-label">Last Name</label>
+      <input type="text" class="form-control" [(ngModel)]="User.last_name">
+    </div>
+    <!-- role -->
+    <div class="col-12 mt-3">
+      <label class="form-label">Role</label>
+      <select class="form-select" [(ngModel)]="User.role_id">
+        <option value="null">Developer</option>
+        @for (role of Roles; track $index) {
+        <option [value]="role.id">{{role.name}}</option>
+        }
+      </select>
+    </div>
+    <!-- actions -->
+    <div class="col-12 d-flex mt-4">
+      <button class="btn btn-secondary" (click)="resetNewUser()">
+        Reset
+      </button>
+      <button class="btn btn-primary ms-auto" (click)="updateUser()">
+        Update
+      </button>
+    </div>
+  </div>
+  }
+  <!-- Update user -->
+
+  <!-- Update email -->
+  @if(modalForm=='updateEmail'){
+  <div class="row g-0 col-12">
+    <!-- email -->
+    <div class="col-12">
+      <label class="form-label">New Email</label>
+      <input type="text" class="form-control" [(ngModel)]="User.email">
+    </div>
+    <!-- actions -->
+    <div class="col-12 d-flex mt-4">
+      <button class="btn btn-secondary" (click)="resetNewUser()">
+        Reset
+      </button>
+      <button class="btn btn-primary ms-auto" (click)="updateEmail()">
+        Update
+      </button>
+    </div>
+  </div>
+  }
+  <!-- Update email -->
 </app-modal>
