@@ -7,7 +7,7 @@ import randStr from '../shared/helpers/randStr';
 })
 export class AppService {
   private sideMenuVisibility = new BehaviorSubject<boolean>(true);
-  private appListMenuVisibility = new BehaviorSubject<boolean>(true);
+  private appListMenuVisibility = new BehaviorSubject<boolean>(false);
   private loadingVisibility = new BehaviorSubject<boolean>(false);
   private alerts = new BehaviorSubject<any>([]);
 
