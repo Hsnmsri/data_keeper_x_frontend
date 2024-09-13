@@ -98,7 +98,7 @@ export class UserService {
 
     try {
       const response = await new ApiService().sendRequest(
-        `role/${this.userData.value.id}`,
+        `role/${this.userData.value.role_id}`,
         'get',
         true
       );
