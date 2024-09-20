@@ -7,7 +7,6 @@ import { FormsModule } from '@angular/forms';
 import searchOnArray from '../../shared/helpers/arraySearch';
 import { ModalComponent } from '../modal/modal.component';
 import Modal from '../../models/modal.model';
-import isNull from '../../shared/helpers/isNull';
 
 @Component({
   selector: 'app-users',
@@ -368,6 +367,62 @@ export class UsersComponent {
     }
   }
 
+  async updatePassword() {
+    try {
+      const response = await this.apiService.sendRequest(
+        `users/${this.User.id}/password`,
+        'put',
+        true,
+        this.User
+      );
+
+      // success
+      if (response.success) {
+        this.appService.alert('User Password Updated Successfully!', 'success');
+        this.loadUserList();
+        this.modal.visibility = false;
+      }
+
+      // error
+      if (!response.success) {
+        this.appService.alert(response.message, 'danger');
+      }
+
+      this.loadUserList();
+    } catch (error) {
+      this.appService.alert('Failed to update password!', 'danger');
+    }
+  }
+
+  async deleteUser(userId: number) {
+    if (!window.confirm('Are you sure you want to delete this user?')) {
+      return;
+    }
+    try {
+      const response = await this.apiService.sendRequest(
+        `users/${userId}`,
+        'delete',
+        true
+      );
+
+      // success
+      if (response.success) {
+        this.appService.alert('User Deleted!', 'success');
+        this.loadUserList();
+        this.modal.visibility = false;
+      }
+
+      // error
+      if (!response.success) {
+        this.appService.alert(response.message, 'danger');
+      }
+
+      this.loadUserList();
+    } catch (error) {
+      this.appService.alert('Failed to delete user!', 'danger');
+    }
+  }
+
   showUpdateUserModal(userId: number) {
     this.showModal('updateUser');
 
@@ -390,8 +445,19 @@ export class UsersComponent {
     });
   }
 
+  showUpdateUserPasswordModal(userId: number) {
+    this.showModal('updatePassword');
+
+    this.Users.forEach((user) => {
+      if (user.id == userId) {
+        this.User = user;
+        return;
+      }
+    });
+  }
+
   showModal(
-    modalForm: 'newUser' | 'updateUser' | 'changePassword' | 'updateEmail'
+    modalForm: 'newUser' | 'updateUser' | 'updatePassword' | 'updateEmail'
   ) {
     // new user form
     if (modalForm == 'newUser') {
@@ -416,6 +482,15 @@ export class UsersComponent {
       this.resetNewUser();
       this.modalForm = 'updateEmail';
       this.modal.title = 'Update User Email';
+      this.modal.visibility = true;
+      return;
+    }
+
+    // update password form
+    if (modalForm == 'updatePassword') {
+      this.resetNewUser();
+      this.modalForm = 'updatePassword';
+      this.modal.title = 'Update User Password';
       this.modal.visibility = true;
       return;
     }
