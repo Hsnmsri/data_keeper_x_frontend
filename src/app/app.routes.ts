@@ -4,6 +4,8 @@ import { AppComponent } from './app.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { PanelComponent } from './panel/panel.component';
 import { UsersComponent } from './users/users.component';
+import { AppsComponent } from './apps/apps.component';
+import { AppPanelComponent } from './app-panel/app-panel.component';
 
 export const routes: Routes = [
   {
@@ -25,6 +27,16 @@ export const routes: Routes = [
       {
         path: 'users',
         component: UsersComponent,
+      },
+      {
+        path: 'apps',
+        component: AppsComponent,
+        children: [
+          {
+            path: ':id',
+            component: AppPanelComponent,
+          },
+        ],
       },
     ],
   },
