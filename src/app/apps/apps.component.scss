@@ -1,0 +1,17 @@
+$app-list-width: 280px;
+
+@media screen {
+  .app-list {
+    min-width: $app-list-width;
+    max-width: $app-list-width;
+  }
+  .main-section {
+    min-width: 100%;
+  }
+}
+
+@media (min-width: 992px) {
+  .main-section {
+    min-width: calc(100% - $app-list-width);
+  }
+}

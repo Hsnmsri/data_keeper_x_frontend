@@ -7,7 +7,7 @@ import { PanelAppListMenuComponent } from '../panel-app-list-menu/panel-app-list
 import { Subscription } from 'rxjs';
 import { AppService } from '../../services/app.service';
 import { UserService } from '../../services/user.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-panel',
@@ -24,7 +24,7 @@ import { Router } from '@angular/router';
 })
 export class PanelComponent {
   isSideBarVisible: boolean = true;
-  isAppListVisible: boolean = false;
+  isInAppsRoute: boolean = false;
 
   private subscriptionSideMenu!: Subscription;
   private subscriptionAppListMenu!: Subscription;
@@ -71,28 +71,12 @@ export class PanelComponent {
       .subscribe((visible) => {
         this.isSideBarVisible = visible;
       });
-
-    // Subscribe to the app list menu visibility observable
-    if (window.innerWidth < 992) {
-      this.isAppListVisible = false;
-      if (this.appService.getAppListMenuVisibility()) {
-        this.appService.toggleAppListMenu();
-      }
-    }
-    this.subscriptionAppListMenu = this.appService
-      .getAppListMenuVisibility()
-      .subscribe((visible) => {
-        this.isAppListVisible = visible;
-      });
   }
 
   ngOnDestroy() {
     // Unsubscribe to prevent memory leaks
     if (this.subscriptionSideMenu) {
       this.subscriptionSideMenu.unsubscribe();
-    }
-    if (this.subscriptionAppListMenu) {
-      this.subscriptionAppListMenu.unsubscribe();
     }
   }
 }

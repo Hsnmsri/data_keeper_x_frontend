@@ -1,0 +1,17 @@
+<div class="w-100 h-100 d-flex justify-content-end overflow-hidden">
+
+  <!-- main section -->
+  <div class="overflow-y-auto w-100 h-100 main-section">
+    <router-outlet></router-outlet>
+  </div>
+  <!-- main section -->
+
+  <!-- app list menu -->
+  @if(appListVisibility){
+  <div class="overflow-y-hidden h-100 app-list">
+    <app-panel-app-list-menu></app-panel-app-list-menu>
+  </div>
+  }
+  <!-- app list menu -->
+
+</div>
