@@ -3,8 +3,10 @@ import { ApiService } from './api.service';
 import { jwtDecode } from 'jwt-decode';
 import Role from '../models/role.model';
 import User from '../models/user.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import Permission from '../models/permission.model';
+import App from '../models/app.model';
+import { AppService } from './app.service';
 
 interface JwtPayload {
   sub: string;
@@ -33,6 +35,7 @@ export class UserService {
     description: null,
     permissions: null,
   });
+  private userApps: BehaviorSubject<App[]> = new BehaviorSubject<App[]>([]);
 
   constructor() {}
 
@@ -279,4 +282,27 @@ export class UserService {
       return null;
     }
   }
+
+  // #region App List
+
+  async updateAppList() {
+    try {
+      let response = await new ApiService().sendRequest(
+        `category/${this.userData.value.id}`,
+        'get',
+        true
+      );
+
+      this.userApps.next(response.data);
+    } catch (error) {
+      new AppService().alert('update user app list failed!');
+      console.log(error);
+    }
+  }
+
+  getAppList(): Observable<App[]> {
+    return this.userApps.asObservable();
+  }
+
+  // #endregion
 }
