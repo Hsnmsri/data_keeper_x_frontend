@@ -3,7 +3,7 @@
   <!-- header -->
   <div class="col-12 row g-0 align-items-center justify-content-between mb-3">
     <span class="col h5 text-dark">App list</span>
-    <button class="btn btn-primary col-auto">
+    <button class="btn btn-primary col-auto" (click)="modal.visibility=true">
       <i class="bi bi-plus"></i>
     </button>
   </div>
@@ -23,3 +23,41 @@
   <!-- app list -->
 
 </div>
+
+<!-- new app modal -->
+<app-modal [visibility]="modal.visibility" [title]="modal.title" (closeModal)="closeModal()">
+
+  <div class="col-12 row g-0">
+
+    <!-- app name -->
+    <div class="col-12">
+      <label class="form-label">Name</label>
+      <input type="text" class="form-control" [(ngModel)]="app.name">
+    </div>
+    <!-- app name -->
+
+    <!-- app description -->
+    <div class="col-12 mt-3">
+      <label class="form-label">Description</label>
+      <input type="text" class="form-control" [(ngModel)]="app.description">
+    </div>
+    <!-- app description -->
+
+    <!-- actions -->
+    <div class="col-12 row g-0 justify-content-between mt-4">
+
+      <button class="btn btn-secondary col-auto" (click)="closeModal()">
+        Cancel
+      </button>
+
+      <button class="btn btn-primary col-auto" (click)="createApp()">
+        Create
+      </button>
+
+    </div>
+    <!-- actions -->
+
+  </div>
+
+</app-modal>
+<!-- new app modal -->
